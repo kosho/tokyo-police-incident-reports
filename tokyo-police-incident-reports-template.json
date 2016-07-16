@@ -1,0 +1,176 @@
+{
+  "template": "tokyo-police-incident-reports",
+    "settings": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0,
+      "index": {
+        "analysis": {
+          "analyzer": {
+            "romaji_analyzer": {
+              "tokenizer": "kuromoji_tokenizer",
+              "mode": "normal",
+              "filter": [
+                "romaji_readingform"
+                ]
+            },
+            "katakana_analyzer": {
+              "tokenizer": "kuromoji_tokenizer",
+              "mode": "normal",
+              "filter": [
+                "katakana_readingform"
+                ]
+            }
+          },
+          "filter": {
+            "romaji_readingform": {
+              "type": "kuromoji_readingform",
+              "use_romaji": true
+            },
+            "katakana_readingform": {
+              "type": "kuromoji_readingform",
+              "use_romaji": false
+            }
+          }
+        }
+      }
+    },
+    "mappings": {
+      "_default_": {
+        "properties": {
+          "area": {
+            "type": "text",
+            "analyzer": "kuromoji",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              },
+              "katakana": {
+                "type": "string",
+                "analyzer": "katakana_analyzer",
+                "fielddata": true
+              },
+              "romaji": {
+                "type": "string",
+                "analyzer": "romaji_analyzer",
+                "fielddata": true
+              }
+            }
+          },
+          "city": {
+            "type": "text",
+            "analyzer": "kuromoji",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              },
+              "katakana": {
+                "type": "string",
+                "analyzer": "katakana_analyzer",
+                "fielddata": true
+              },
+              "romaji": {
+                "type": "string",
+                "analyzer": "romaji_analyzer",
+                "fielddata": true
+              }
+            }
+          },
+          "incident": {
+            "type": "text",
+            "analyzer": "kuromoji",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              },
+              "katakana": {
+                "type": "string",
+                "analyzer": "katakana_analyzer",
+                "fielddata": true
+              },
+              "romaji": {
+                "type": "string",
+                "analyzer": "romaji_analyzer",
+                "fielddata": true
+              }
+            }
+          },
+          "message": {
+            "type": "text",
+            "analyzer": "kuromoji",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "place": {
+            "type": "text",
+            "analyzer": "kuromoji",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              },
+              "katakana": {
+                "type": "string",
+                "analyzer": "katakana_analyzer",
+                "fielddata": true
+              },
+              "romaji": {
+                "type": "string",
+                "analyzer": "romaji_analyzer",
+                "fielddata": true
+              }
+            }
+          },
+          "police_station": {
+            "type": "text",
+            "analyzer": "kuromoji",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              },
+              "katakana": {
+                "type": "string",
+                "analyzer": "katakana_analyzer",
+                "fielddata": true
+              },
+              "romaji": {
+                "type": "string",
+                "analyzer": "romaji_analyzer",
+                "fielddata": true
+              }
+            }
+          },
+          "subject": {
+            "type": "text",
+            "analyzer": "kuromoji",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              },
+              "katakana": {
+                "type": "string",
+                "analyzer": "katakana_analyzer",
+                "fielddata": true
+              },
+              "romaji": {
+                "type": "string",
+                "analyzer": "romaji_analyzer",
+                "fielddata": true
+              }
+            }
+          },
+          "location": {
+            "type": "geo_point"
+          }
+        }
+      }
+    }
+}

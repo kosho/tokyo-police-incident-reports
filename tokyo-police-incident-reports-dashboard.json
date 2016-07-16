@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "Tokyo-Police-Incident-Reports",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Tokyo Police Incident Reports",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"col\":4,\"id\":\"Tokyo-Police-Incident-Reports-Geo\",\"panelIndex\":1,\"row\":1,\"size_x\":6,\"size_y\":6,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Tokyo-Police-Incident-Reports-Incidents-Stacked\",\"panelIndex\":2,\"row\":9,\"size_x\":9,\"size_y\":2,\"type\":\"visualization\"},{\"col\":10,\"id\":\"Tokyo-Police-Incident-Reports-Stations-Pie\",\"panelIndex\":3,\"row\":1,\"size_x\":3,\"size_y\":4,\"type\":\"visualization\"},{\"col\":10,\"id\":\"Tokyo-Police-Incident-Reports-Top-Cities\",\"panelIndex\":4,\"row\":5,\"size_x\":3,\"size_y\":4,\"type\":\"visualization\"},{\"col\":10,\"id\":\"Tokyo-Police-Incident-Reports-Top-Incidents\",\"panelIndex\":5,\"row\":9,\"size_x\":3,\"size_y\":4,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Tokyo-Police-Incident-Reprots-Title\",\"panelIndex\":6,\"row\":1,\"size_x\":3,\"size_y\":4,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Tokyo-Police-Incident-Reports-Total-Incidents\",\"panelIndex\":8,\"row\":5,\"size_x\":3,\"size_y\":2,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Tokyo-Police-Incident-Reports-Timeseries\",\"panelIndex\":9,\"row\":7,\"size_x\":9,\"size_y\":2,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Tokyo-Police-Incident-Reports-Top-Cities-w-Incidents\",\"panelIndex\":10,\"row\":11,\"size_x\":9,\"size_y\":2,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Tokyo-Police-Incident-Reports-Sample-Report\",\"panelIndex\":11,\"row\":13,\"size_x\":4,\"size_y\":3,\"type\":\"visualization\"},{\"col\":5,\"id\":\"Tokyo-Police-Incident-Reports-Logstash-Configuration\",\"panelIndex\":12,\"row\":13,\"size_x\":5,\"size_y\":3,\"type\":\"visualization\"}]",
+      "optionsJSON": "{\"darkTheme\":false}",
+      "uiStateJSON": "{\"P-1\":{\"mapCenter\":[35.687417812220446,139.5981216430664]},\"P-10\":{\"vis\":{\"legendOpen\":false}},\"P-2\":{\"vis\":{\"legendOpen\":false}},\"P-3\":{\"vis\":{\"legendOpen\":false}},\"P-4\":{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}},\"P-5\":{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}}",
+      "version": 1,
+      "timeRestore": true,
+      "timeTo": "now",
+      "timeFrom": "now/y",
+      "refreshInterval": {
+        "display": "Off",
+        "pause": false,
+        "value": 0
+      },
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}]}"
+      }
+    }
+  }
+]

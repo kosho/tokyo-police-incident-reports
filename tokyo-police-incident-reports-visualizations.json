@@ -1,0 +1,170 @@
+[
+  {
+    "_id": "Tokyo-Police-Incident-Reports-Geo",
+    "_type": "visualization",
+    "_source": {
+      "title": "Tokyo Police Incident Reports - Geo",
+      "visState": "{\"title\":\"Tokyo Police Incident Reports - Geo\",\"type\":\"tile_map\",\"params\":{\"mapType\":\"Scaled Circle Markers\",\"isDesaturated\":true,\"addTooltip\":true,\"heatMaxZoom\":16,\"heatMinOpacity\":0.1,\"heatRadius\":25,\"heatBlur\":15,\"heatNormalizeData\":true,\"mapZoom\":2,\"mapCenter\":[15,5],\"wms\":{\"enabled\":true,\"url\":\"http://www.finds.jp/ws/wms.php\",\"options\":{\"version\":\"1.3.0\",\"layers\":\"MncplRoman,municipality,river,rail,station,stationname\",\"format\":\"image/png\",\"transparent\":true,\"attribution\":\"Maps provided by\",\"styles\":\"\"}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"geohash_grid\",\"schema\":\"segment\",\"params\":{\"field\":\"location\",\"autoPrecision\":true,\"precision\":\"6\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"mapCenter\":[35.65645937572576,139.5809555053711],\"mapZoom\":11}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"tokyo-police-incident-reports\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Tokyo-Police-Incident-Reports-Incidents-Stacked",
+    "_type": "visualization",
+    "_source": {
+      "title": "Tokyo Police Incident Reports - Incidents Stacked",
+      "visState": "{\"title\":\"Tokyo Police Incident Reports - Incidents Stacked\",\"type\":\"area\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"smoothLines\":false,\"scale\":\"linear\",\"interpolate\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"incident.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"tokyo-police-incident-reports\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Tokyo-Police-Incident-Reports-Stations-Pie",
+    "_type": "visualization",
+    "_source": {
+      "title": "Tokyo Police Incident Reports - Stations Pie",
+      "visState": "{\"title\":\"Tokyo Police Incident Reports - Stations Pie\",\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"isDonut\":true},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"police_station.keyword\",\"size\":20,\"order\":\"desc\",\"orderBy\":\"1\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"city.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"tokyo-police-incident-reports\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Tokyo-Police-Incident-Reports-Top-Cities-w-Incidents",
+    "_type": "visualization",
+    "_source": {
+      "title": "Tokyo Police Incident Reports - Top Cities w Incidents",
+      "visState": "{\"title\":\"Tokyo Police Incident Reports - Top Cities w Incidents\",\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"isDonut\":true},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"city.keyword\",\"size\":7,\"order\":\"desc\",\"orderBy\":\"1\",\"row\":false}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"incident.keyword\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"spy\":{\"mode\":{\"name\":null,\"fill\":false}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"tokyo-police-incident-reports\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Tokyo-Police-Incident-Reports-Top-Incidents",
+    "_type": "visualization",
+    "_source": {
+      "title": "Tokyo Police Incident Reports - Top Incidents",
+      "visState": "{\"title\":\"Tokyo Police Incident Reports - Top Incidents\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"incident.keyword\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"tokyo-police-incident-reports\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Tokyo-Police-Incident-Reports-Top-Cities",
+    "_type": "visualization",
+    "_source": {
+      "title": "Tokyo Police Incident Reports - Top Cities",
+      "visState": "{\"title\":\"Tokyo Police Incident Reports - Top Cities\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"city.keyword\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"tokyo-police-incident-reports\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Tokyo-Police-Incident-Reports-Total-Incidents",
+    "_type": "visualization",
+    "_source": {
+      "title": "Tokyo Police Incident Reports - Total Incidents",
+      "visState": "{\"title\":\"Tokyo Police Incident Reports - Total Incidents\",\"type\":\"metric\",\"params\":{\"handleNoResults\":true,\"fontSize\":60},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"tokyo-police-incident-reports\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Tokyo-Police-Incident-Reports-Timeseries",
+    "_type": "visualization",
+    "_source": {
+      "title": "Tokyo Police Incident Reports - Timeseries",
+      "visState": "{\"type\":\"timelion\",\"title\":\"Tokyo Police Incident Reports - Timeseries\",\"params\":{\"expression\":\".es(index=tokyo-police-incident-reports) .es(index=tokyo-police-incident-reports).movingaverage(3)  .es(index=tokyo-police-incident-reports).movingstd(3).bars().color(red)\",\"interval\":\"1d\"}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
+      }
+    }
+  },
+  {
+    "_id": "Tokyo-Police-Incident-Reports-Top-Cities-Romaji",
+    "_type": "visualization",
+    "_source": {
+      "title": "Tokyo Police Incident Reports - Top Cities Romaji",
+      "visState": "{\"title\":\"Tokyo Police Incident Reports - Top Cities Romaji\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"city.romaji\",\"exclude\":{\"pattern\":\"ku|shi|gawa|edo\"},\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"tokyo-police-incident-reports\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Tokyo-Police-Incident-Reprots-Title",
+    "_type": "visualization",
+    "_source": {
+      "title": "Tokyo Police Incident Reprots - Title",
+      "visState": "{\"title\":\"Tokyo Police Incident Reprots - Title\",\"type\":\"markdown\",\"params\":{\"markdown\":\"# ![](http://www.keishicho.metro.tokyo.jp/images/author_img.png) Tokyo Police Incident Reports\\n\\nThe original source of incident reports are delivered via e-mail by the Tokyo Metropolitan Police Department. The township level geographic locational information is provided by the Ministry of Land, Infrastructure, Transport and Tourism of Japan. The circles on the map may not reflect exact locations. Elastic's demo purpose only.\\n\\nSource: [警視庁のメールけいしちょう(登録無料)](http://www.keishicho.metro.tokyo.jp/about_mpd/joho/mail_info.html)  \\nLicense: [CC BY 2.1 JP](https://creativecommons.org/licenses/by/2.1/jp/)\"},\"aggs\":[],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Tokyo-Police-Incident-Reports-Sample-Report",
+    "_type": "visualization",
+    "_source": {
+      "title": "Tokyo Police Incident Reports - Sample Report",
+      "visState": "{\"title\":\"Tokyo Police Incident Reports - Sample Report\",\"type\":\"markdown\",\"params\":{\"markdown\":\"## Sample Police Incident Report\\n\\n**Subject:** 杉並警察署(公然わいせつ)  \\n**Body:**\\n7月16日（土）、午後4時10分ころ、杉並区成田東２丁目の路上で、公然わいせつ事件が発生しました。（犯人の特徴については、特徴年齢５０歳代、１６０センチ、サングラス着用、黄色ポロシャツの男）\\n【問合せ先】杉並警察署 03-3314-0110（内線2612）\"},\"aggs\":[],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Tokyo-Police-Incident-Reports-Logstash-Configuration",
+    "_type": "visualization",
+    "_source": {
+      "title": "Tokyo Police Incident Reports - Logstash Configuration",
+      "visState": "{\"title\":\"Tokyo Police Incident Reports - Logstash Configuration\",\"type\":\"markdown\",\"params\":{\"markdown\":\"## Logstash Configuration\\n\\n```\\ninput {\\n  imap {\\n    host => \\\"imap.gmail.com\\\"\\n    port => 993\\n    user => \\\"YOUR USER NAME\\\"\\n    password => \\\"YOUR PASSWORD\\\"\\n    folder => \\\"YOUR FOLDER NAME\\\"\\n    type => \\\"gmail\\\"\\n    check_interval => 5\\n    codec => plain { charset => \\\"ISO-2022-JP\\\" }\\n  }\\n}\\n\\nfilter {\\n  grok {\\n    match => { \\\"message\\\" => \\\"%{DATA:[@metadata][datetime]}ころ、%{NOTSPACE:city}(区|市)%{NOTSPACE:area}(の|付近)(%{GREEDYDATA:place}|)で、%{GREEDYDATA}\\\" }\\n  }\\n  date {\\n    match => [\\\"[@metadata][datetime]\\\", \\\"M月d日（E）、aK時m分\\\"]\\n    locale => ja\\n    timezone => \\\"Asia/Tokyo\\\"\\n  }\\n  grok {\\n    match => { \\\"subject\\\" => \\\"%{NOTSPACE:police_station}警察署\\\\(%{NOTSPACE:incident}\\\\)\\\" }\\n  }\\n  if [city] and [area] {\\n    elasticsearch {\\n      hosts => [\\\"localhost\\\"]\\n      query => \\\"city:%{[city]} AND township:%{[area]}\\\"\\n      fields => [[\\\"location\\\", \\\"location\\\"]]\\n      index => \\\"japan-township-level-gis\\\"\\n      enable_sort => false\\n    }\\n  }\\n}\\n\\noutput {\\n#  stdout { codec => rubydebug }\\n  stdout { codec => dots }\\n  elasticsearch {\\n    hosts => [\\\"http://127.0.0.1:9200/\\\"]\\n    index => \\\"tokyo-police-incident-reports\\\"\\n    template => \\\"./tokyo-police-incident-reports-template.json\\\"\\n    template_name => \\\"tokyo-police-incident-reports\\\"\\n    template_overwrite => true\\n  }\\n}\\n```\"},\"aggs\":[],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  }
+]
