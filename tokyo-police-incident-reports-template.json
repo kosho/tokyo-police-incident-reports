@@ -46,12 +46,12 @@
                 "ignore_above": 256
               },
               "katakana": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "katakana_analyzer",
                 "fielddata": true
               },
               "romaji": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "romaji_analyzer",
                 "fielddata": true
               }
@@ -66,12 +66,12 @@
                 "ignore_above": 256
               },
               "katakana": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "katakana_analyzer",
                 "fielddata": true
               },
               "romaji": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "romaji_analyzer",
                 "fielddata": true
               }
@@ -86,12 +86,12 @@
                 "ignore_above": 256
               },
               "katakana": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "katakana_analyzer",
                 "fielddata": true
               },
               "romaji": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "romaji_analyzer",
                 "fielddata": true
               }
@@ -116,12 +116,12 @@
                 "ignore_above": 256
               },
               "katakana": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "katakana_analyzer",
                 "fielddata": true
               },
               "romaji": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "romaji_analyzer",
                 "fielddata": true
               }
@@ -136,12 +136,12 @@
                 "ignore_above": 256
               },
               "katakana": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "katakana_analyzer",
                 "fielddata": true
               },
               "romaji": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "romaji_analyzer",
                 "fielddata": true
               }
@@ -156,12 +156,12 @@
                 "ignore_above": 256
               },
               "katakana": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "katakana_analyzer",
                 "fielddata": true
               },
               "romaji": {
-                "type": "string",
+                "type": "text",
                 "analyzer": "romaji_analyzer",
                 "fielddata": true
               }
