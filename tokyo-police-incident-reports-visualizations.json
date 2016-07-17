@@ -1,29 +1,15 @@
 [
   {
-    "_id": "Tokyo-Police-Incident-Reports-Geo",
+    "_id": "Tokyo-Police-Incident-Reports-Logstash-Configuration",
     "_type": "visualization",
     "_source": {
-      "title": "Tokyo Police Incident Reports - Geo",
-      "visState": "{\"title\":\"Tokyo Police Incident Reports - Geo\",\"type\":\"tile_map\",\"params\":{\"mapType\":\"Scaled Circle Markers\",\"isDesaturated\":true,\"addTooltip\":true,\"heatMaxZoom\":16,\"heatMinOpacity\":0.1,\"heatRadius\":25,\"heatBlur\":15,\"heatNormalizeData\":true,\"mapZoom\":2,\"mapCenter\":[15,5],\"wms\":{\"enabled\":true,\"url\":\"http://www.finds.jp/ws/wms.php\",\"options\":{\"version\":\"1.3.0\",\"layers\":\"MncplRoman,municipality,river,rail,station,stationname\",\"format\":\"image/png\",\"transparent\":true,\"attribution\":\"Maps provided by\",\"styles\":\"\"}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"geohash_grid\",\"schema\":\"segment\",\"params\":{\"field\":\"location\",\"autoPrecision\":true,\"precision\":\"6\"}}],\"listeners\":{}}",
-      "uiStateJSON": "{\"mapCenter\":[35.65645937572576,139.5809555053711],\"mapZoom\":11}",
-      "description": "",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"tokyo-police-incident-reports\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"filter\":[]}"
-      }
-    }
-  },
-  {
-    "_id": "Tokyo-Police-Incident-Reports-Incidents-Stacked",
-    "_type": "visualization",
-    "_source": {
-      "title": "Tokyo Police Incident Reports - Incidents Stacked",
-      "visState": "{\"title\":\"Tokyo Police Incident Reports - Incidents Stacked\",\"type\":\"area\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"smoothLines\":false,\"scale\":\"linear\",\"interpolate\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"incident.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "title": "Tokyo Police Incident Reports - Logstash Configuration",
+      "visState": "{\"title\":\"Tokyo Police Incident Reports - Logstash Configuration\",\"type\":\"markdown\",\"params\":{\"markdown\":\"## Logstash Configuration\\n\\n```\\ninput {\\n  imap {\\n    host => \\\"imap.gmail.com\\\"\\n    port => 993\\n    user => \\\"YOUR USER NAME\\\"\\n    password => \\\"YOUR PASSWORD\\\"\\n    folder => \\\"YOUR FOLDER NAME\\\"\\n    type => \\\"gmail\\\"\\n    check_interval => 5\\n    codec => plain { charset => \\\"ISO-2022-JP\\\" }\\n  }\\n}\\n\\nfilter {\\n  grok {\\n    match => { \\\"message\\\" => \\\"%{DATA:[@metadata][datetime]}ころ、%{NOTSPACE:city}(区|市)%{NOTSPACE:area}(の|付近)(%{GREEDYDATA:place}|)で、%{GREEDYDATA}\\\" }\\n  }\\n  date {\\n    match => [\\\"[@metadata][datetime]\\\", \\\"M月d日（E）、aK時m分\\\"]\\n    locale => ja\\n    timezone => \\\"Asia/Tokyo\\\"\\n  }\\n  grok {\\n    match => { \\\"subject\\\" => \\\"%{NOTSPACE:police_station}警察署\\\\(%{NOTSPACE:incident}\\\\)\\\" }\\n  }\\n  if [city] and [area] {\\n    elasticsearch {\\n      hosts => [\\\"localhost\\\"]\\n      query => \\\"city:%{[city]} AND township:%{[area]}\\\"\\n      fields => [[\\\"location\\\", \\\"location\\\"]]\\n      index => \\\"japan-township-level-gis\\\"\\n      enable_sort => false\\n    }\\n  }\\n}\\n\\noutput {\\n#  stdout { codec => rubydebug }\\n  stdout { codec => dots }\\n  elasticsearch {\\n    hosts => [\\\"http://127.0.0.1:9200/\\\"]\\n    index => \\\"tokyo-police-incident-reports\\\"\\n    template => \\\"./tokyo-police-incident-reports-template.json\\\"\\n    template_name => \\\"tokyo-police-incident-reports\\\"\\n    template_overwrite => true\\n  }\\n}\\n```\"},\"aggs\":[],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"tokyo-police-incident-reports\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -70,6 +56,34 @@
     }
   },
   {
+    "_id": "Tokyo-Police-Incident-Reports-Sample-Report",
+    "_type": "visualization",
+    "_source": {
+      "title": "Tokyo Police Incident Reports - Sample Report",
+      "visState": "{\"title\":\"Tokyo Police Incident Reports - Sample Report\",\"type\":\"markdown\",\"params\":{\"markdown\":\"## Sample Police Incident Report\\n\\n**Subject:** 杉並警察署(公然わいせつ)  \\n**Body:**\\n7月16日（土）、午後4時10分ころ、杉並区成田東２丁目の路上で、公然わいせつ事件が発生しました。（犯人の特徴については、特徴年齢５０歳代、１６０センチ、サングラス着用、黄色ポロシャツの男）\\n【問合せ先】杉並警察署 03-3314-0110（内線2612）\"},\"aggs\":[],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Tokyo-Police-Incident-Reports-Incidents-Stacked",
+    "_type": "visualization",
+    "_source": {
+      "title": "Tokyo Police Incident Reports - Incidents Stacked",
+      "visState": "{\"title\":\"Tokyo Police Incident Reports - Incidents Stacked\",\"type\":\"area\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"smoothLines\":false,\"scale\":\"linear\",\"interpolate\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"incident.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"tokyo-police-incident-reports\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
     "_id": "Tokyo-Police-Incident-Reports-Top-Cities",
     "_type": "visualization",
     "_source": {
@@ -98,20 +112,6 @@
     }
   },
   {
-    "_id": "Tokyo-Police-Incident-Reports-Timeseries",
-    "_type": "visualization",
-    "_source": {
-      "title": "Tokyo Police Incident Reports - Timeseries",
-      "visState": "{\"type\":\"timelion\",\"title\":\"Tokyo Police Incident Reports - Timeseries\",\"params\":{\"expression\":\".es(index=tokyo-police-incident-reports) .es(index=tokyo-police-incident-reports).movingaverage(3)  .es(index=tokyo-police-incident-reports).movingstd(3).bars().color(red)\",\"interval\":\"1d\"}}",
-      "uiStateJSON": "{}",
-      "description": "",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{}"
-      }
-    }
-  },
-  {
     "_id": "Tokyo-Police-Incident-Reports-Top-Cities-Romaji",
     "_type": "visualization",
     "_source": {
@@ -122,6 +122,20 @@
       "version": 1,
       "kibanaSavedObjectMeta": {
         "searchSourceJSON": "{\"index\":\"tokyo-police-incident-reports\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Tokyo-Police-Incident-Reports-Timeseries",
+    "_type": "visualization",
+    "_source": {
+      "title": "Tokyo Police Incident Reports - Timeseries",
+      "visState": "{\"type\":\"timelion\",\"title\":\"Tokyo Police Incident Reports - Timeseries\",\"params\":{\"expression\":\".es(index=tokyo-police-incident-reports) .es(index=tokyo-police-incident-reports).movingaverage(3)  .es(index=tokyo-police-incident-reports).movingstd(3).bars().color(red)\",\"interval\":\"1d\"}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{}"
       }
     }
   },
@@ -140,30 +154,16 @@
     }
   },
   {
-    "_id": "Tokyo-Police-Incident-Reports-Sample-Report",
+    "_id": "Tokyo-Police-Incident-Reports-Geo",
     "_type": "visualization",
     "_source": {
-      "title": "Tokyo Police Incident Reports - Sample Report",
-      "visState": "{\"title\":\"Tokyo Police Incident Reports - Sample Report\",\"type\":\"markdown\",\"params\":{\"markdown\":\"## Sample Police Incident Report\\n\\n**Subject:** 杉並警察署(公然わいせつ)  \\n**Body:**\\n7月16日（土）、午後4時10分ころ、杉並区成田東２丁目の路上で、公然わいせつ事件が発生しました。（犯人の特徴については、特徴年齢５０歳代、１６０センチ、サングラス着用、黄色ポロシャツの男）\\n【問合せ先】杉並警察署 03-3314-0110（内線2612）\"},\"aggs\":[],\"listeners\":{}}",
-      "uiStateJSON": "{}",
+      "title": "Tokyo Police Incident Reports - Geo",
+      "visState": "{\"title\":\"Tokyo Police Incident Reports - Geo\",\"type\":\"tile_map\",\"params\":{\"mapType\":\"Scaled Circle Markers\",\"isDesaturated\":false,\"addTooltip\":true,\"heatMaxZoom\":16,\"heatMinOpacity\":0.1,\"heatRadius\":25,\"heatBlur\":15,\"heatNormalizeData\":true,\"mapZoom\":2,\"mapCenter\":[15,5],\"wms\":{\"enabled\":true,\"url\":\"http://www.finds.jp/ws/wms.php\",\"options\":{\"version\":\"1.3.0\",\"layers\":\"MncplRoman,municipality,river,rail,station,stationname\",\"format\":\"image/png\",\"transparent\":true,\"attribution\":\"Maps provided by\",\"styles\":\"\"}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"geohash_grid\",\"schema\":\"segment\",\"params\":{\"field\":\"location\",\"autoPrecision\":true,\"precision\":6}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"mapCenter\":[35.65618041632016,139.5809555053711],\"mapZoom\":11}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
-      }
-    }
-  },
-  {
-    "_id": "Tokyo-Police-Incident-Reports-Logstash-Configuration",
-    "_type": "visualization",
-    "_source": {
-      "title": "Tokyo Police Incident Reports - Logstash Configuration",
-      "visState": "{\"title\":\"Tokyo Police Incident Reports - Logstash Configuration\",\"type\":\"markdown\",\"params\":{\"markdown\":\"## Logstash Configuration\\n\\n```\\ninput {\\n  imap {\\n    host => \\\"imap.gmail.com\\\"\\n    port => 993\\n    user => \\\"YOUR USER NAME\\\"\\n    password => \\\"YOUR PASSWORD\\\"\\n    folder => \\\"YOUR FOLDER NAME\\\"\\n    type => \\\"gmail\\\"\\n    check_interval => 5\\n    codec => plain { charset => \\\"ISO-2022-JP\\\" }\\n  }\\n}\\n\\nfilter {\\n  grok {\\n    match => { \\\"message\\\" => \\\"%{DATA:[@metadata][datetime]}ころ、%{NOTSPACE:city}(区|市)%{NOTSPACE:area}(の|付近)(%{GREEDYDATA:place}|)で、%{GREEDYDATA}\\\" }\\n  }\\n  date {\\n    match => [\\\"[@metadata][datetime]\\\", \\\"M月d日（E）、aK時m分\\\"]\\n    locale => ja\\n    timezone => \\\"Asia/Tokyo\\\"\\n  }\\n  grok {\\n    match => { \\\"subject\\\" => \\\"%{NOTSPACE:police_station}警察署\\\\(%{NOTSPACE:incident}\\\\)\\\" }\\n  }\\n  if [city] and [area] {\\n    elasticsearch {\\n      hosts => [\\\"localhost\\\"]\\n      query => \\\"city:%{[city]} AND township:%{[area]}\\\"\\n      fields => [[\\\"location\\\", \\\"location\\\"]]\\n      index => \\\"japan-township-level-gis\\\"\\n      enable_sort => false\\n    }\\n  }\\n}\\n\\noutput {\\n#  stdout { codec => rubydebug }\\n  stdout { codec => dots }\\n  elasticsearch {\\n    hosts => [\\\"http://127.0.0.1:9200/\\\"]\\n    index => \\\"tokyo-police-incident-reports\\\"\\n    template => \\\"./tokyo-police-incident-reports-template.json\\\"\\n    template_name => \\\"tokyo-police-incident-reports\\\"\\n    template_overwrite => true\\n  }\\n}\\n```\"},\"aggs\":[],\"listeners\":{}}",
-      "uiStateJSON": "{}",
-      "description": "",
-      "version": 1,
-      "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"tokyo-police-incident-reports\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"filter\":[]}"
       }
     }
   }
